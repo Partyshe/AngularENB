@@ -24,15 +24,13 @@ angular.module('myApp.controllers', []).controller('AppCtrl', function ($scope, 
 function IndexCtrl($scope, $http) {
     console.log("IndexCtrl Start");
 
-    function countSections (){
-        var amountOfSections = Math.ceil($scope.projects.length/3);
-        $scope.sections = [];
-
-        for(var i = 0; i<amountOfSections; i++){
-            $scope.sections.push(i);
+    $scope.countSections = function (){
+        if(!$scope.projects){
+            return;
         }
 
-        return $scope.sections;
+        var amountOfSections = Math.ceil($scope.projects.length/3);
+        return new Array(amountOfSections);
     };
 
     $scope.limitToStartIndex = function (curIndex) {
@@ -43,7 +41,6 @@ function IndexCtrl($scope, $http) {
         console.log("IndexCtrl @get Success");
 
         $scope.projects = data.projects;
-        countSections();
 
         console.log($scope.projects);
     });

@@ -1,5 +1,5 @@
 p There are {{projects.length}} projects
-section(ng-repeat='item in sections').bg-grey
+section(ng-repeat='item in countSections()').bg-grey
     div.container
         div.row.equal
             div(ng-repeat='post in projects|myLimitTo:3:limitToStartIndex($index)').col-sm-4
