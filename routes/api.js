@@ -2,15 +2,9 @@
  * Serve JSON to our AngularJS client
  */
 
-//exports.name = function (req, res) {
-//  res.json({
-//    name: 'Bob'
-//  });
-//};
-
 // initialize our faux database
 var data = {
-  "projects": [
+  "products": [
     {
       "image": "images/haprowine.png",
       "title": "HAproWINE",
@@ -76,62 +70,20 @@ var data = {
 
 // GET
 
-exports.projects = function (req, res) {
-  var posts = [];
-  data.projects.forEach(function (post, i) {
+module.exports.products = function (req, res) {
+  var posts = [],
+      mainUrl = "http://localhost:3000/";
+
+  data.products.forEach(function (post, i) {
     posts.push({
       id: i,
-      image: "http://localhost:3000/" + post.image,
+      image: mainUrl + post.image,
       title: post.title,
-      text: post.text //.substr(0, 50) + '...'
+      text: post.text
     });
   });
 
   res.json({
-    projects: posts
+    products: posts
   });
 };
-
-//exports.post = function (req, res) {
-//  var id = req.params.id;
-//  if (id >= 0 && id < data.posts.length) {
-//    res.json({
-//      post: data.posts[id]
-//    });
-//  } else {
-//    res.json(false);
-//  }
-//};
-//
-//// POST
-//
-//exports.addPost = function (req, res) {
-//  data.posts.push(req.body);
-//  res.json(req.body);
-//};
-//
-//// PUT
-//
-//exports.editPost = function (req, res) {
-//  var id = req.params.id;
-//
-//  if (id >= 0 && id < data.posts.length) {
-//    data.posts[id] = req.body;
-//    res.json(true);
-//  } else {
-//    res.json(false);
-//  }
-//};
-//
-//// DELETE
-//
-//exports.deletePost = function (req, res) {
-//  var id = req.params.id;
-//
-//  if (id >= 0 && id < data.posts.length) {
-//    data.posts.splice(id, 1);
-//    res.json(true);
-//  } else {
-//    res.json(false);
-//  }
-//};

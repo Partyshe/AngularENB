@@ -4,16 +4,14 @@
 
 var express = require('express'),
     bodyParser = require('body-parser'),
-    methodOverride = require('method-override'),
     errorHandler = require('errorhandler'),
-    morgan = require('morgan'),
-    routes = require('./routes'),
-    api = require('./routes/api'),
+    routesIndex = require('./routes/index'),
+    routesPartials = require('./routes/partials'),
+    routesApi = require('./routes/api'),
     http = require('http'),
     path = require('path');
 
-var app = module.exports = express();
-
+var app = express();
 
 /**
  * Configuration
@@ -21,11 +19,10 @@ var app = module.exports = express();
 
 // all environments
 app.set('port', process.env.PORT || 3000);
+
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-//app.use(morgan('dev'));
 app.use(bodyParser.json());
-//app.use(methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
 
 var env = process.env.NODE_ENV || 'development';
@@ -40,28 +37,19 @@ if (env === 'production') {
     // TODO
 }
 
-
 /**
  * Routes
  */
 
 // serve index and view partials
-app.get('/', routes.index);
-app.get('/partials/:name', routes.partials);
+app.get('/', routesIndex.index);
+app.get('/partials/:name', routesPartials.partials);
 
 // JSON API
-//app.get('/api/name', api.name);
-
-app.get('/api/projects', api.projects);
-
-//app.get('/api/post/:id', api.post);
-//app.post('/api/post', api.addPost);
-//app.put('/api/post/:id', api.editPost);
-//app.delete('/api/post/:id', api.deletePost);
+app.get('/api/products', routesApi.products);
 
 // redirect all others to the index (HTML5 history)
-//app.get('*', routes.index);
-
+app.get('*', routesIndex.index);
 
 /**
  * Start Server
